@@ -1,7 +1,6 @@
 package main
 
 import (
-	// "Othello/golang/OthelloPosition.go"
 	"fmt"
 	"os"
 )
@@ -13,6 +12,7 @@ func main() {
 	} else {
 		sequence = "WEEEEEEEEEEEEEEEEEEEEEEEEEEEOXEEEEEEXOEEEEEEEEEEEEEEEEEEEEEEEEEEE"
 	}
+	board := Board.New()
 	fmt.Println(sequence)
 	// othelloPosition := OthelloPosition.Ini(sequence)
 	// fmt.Print(othelloPosition.toString())
