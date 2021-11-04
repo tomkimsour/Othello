@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
+
+	Board "github.com/tomkimsour/Othello/othello-functions"
 )
 
 func main() {
@@ -12,8 +14,11 @@ func main() {
 	} else {
 		sequence = "WEEEEEEEEEEEEEEEEEEEEEEEEEEEOXEEEEEEXOEEEEEEEEEEEEEEEEEEEEEEEEEEE"
 	}
-	board := Board.New()
 	fmt.Println(sequence)
+	// var board othellofunctions.Board
+	board := Board.New()
+	board.OthelloPosition(sequence)
+	board.Print()
 	// othelloPosition := OthelloPosition.Ini(sequence)
 	// fmt.Print(othelloPosition.toString())
 }
