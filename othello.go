@@ -1,7 +1,9 @@
 package main
 
 import (
+	"log"
 	"os"
+	"strconv"
 
 	alphabetapruning "github.com/tomkimsour/Othello/alpha-beta-pruning"
 	"github.com/tomkimsour/Othello/board"
@@ -9,35 +11,26 @@ import (
 
 func main() {
 	var sequence string
+	var time int
 	if len(os.Args) > 1 {
 		sequence = os.Args[1]
 	} else {
-		// sequence = "WEEEEEEEEEXEXEXEEEEXXXEEEEXXOXXEEEEXXOEEEEXEXEXEEEEEEEEXEEEEEEEEE"
-		sequence = "WEEEEEEEEEEEEEEEEEEEEEEEEEEEOXEEEEEEXOEEEEEEEEEEEEEEEEEEEEEEEEEEE"
+		log.Fatal("No string was given")
+	}
+	if len(os.Args) > 2 {
+		time, _ = strconv.Atoi(os.Args[2])
+	} else {
+		log.Fatal("No timeout given")
+	}
+	if len(sequence) != 65 {
+		log.Fatal("The string has to be of size 65")
 	}
 
 	currentBoard := board.New()
 
 	currentBoard.OthelloPosition(sequence)
-	abp := alphabetapruning.New(currentBoard, 7)
+	abp := alphabetapruning.New(currentBoard, 9, time)
 
 	move := abp.Evaluate(currentBoard)
-	// nextBoard := currentBoard.MakeMove(move)
 	move.Print()
-
-	// currentBoard.Print()
-	// var moves *list.List
-	// moves = currentBoard.GetMoves()
-	// var newBoard *board.Board
-	// for e := moves.Front(); e != nil; e = e.Next() {
-	// 	value := e.Value.(*action.Action)
-	// 	// value.Print()
-	// 	newBoard = currentBoard.MakeMove(value)
-	// 	newBoard.Print()
-	// }
-	// newBoard.Print()
-	// fmt.Println(newBoard.ToString())
-
-	// othelloPosition := OthelloPosition.Ini(sequence)
-	// fmt.Print(othelloPosition.toString())
 }

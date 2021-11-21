@@ -8,44 +8,86 @@ type Evaluator struct {
 	value int
 }
 
-var color rune
-
-func coinParity(position *board.Board) (int, int) {
+func coinParity(position *board.Board) int {
 	boardSize := board.BoardSize
-	myCounter := 0
-	opponentCounter := 0
+	maxCounter := 0
+	minCounter := 0
 	for i := 1; i < boardSize-1; i++ {
 		for j := 1; j < boardSize-1; j++ {
-			if position.Board[i][j] != 'E' {
-				if position.Board[i][j] == color {
-					myCounter++
-				} else {
-					opponentCounter++
-				}
+			if position.Board[i][j] == 'B' {
+				minCounter++
+			} else if position.Board[i][j] == 'W' {
+				maxCounter++
 			}
 		}
 	}
-	return myCounter, opponentCounter
+	if maxCounter+minCounter != 0 {
+		return 100 * (maxCounter - minCounter) / (maxCounter + minCounter)
+	}
+	return 0
 }
 
-func mobility(position *board.Board) (int, int) {
-	myCounter := position.GetMoves().Len()
-	position.ChangeMaxPlayer()
-	opponentCounter := position.GetMoves().Len()
-	return myCounter, opponentCounter
+func mobility(position *board.Board) int {
+	var maxCounter, minCounter int
+
+	if position.GetMaxPlayer() == false {
+		maxCounter = position.GetMoves().Len()
+		position.ChangeMaxPlayer()
+		minCounter = position.GetMoves().Len()
+		position.ChangeMaxPlayer()
+	} else {
+		minCounter = position.GetMoves().Len()
+		position.ChangeMaxPlayer()
+		maxCounter = position.GetMoves().Len()
+		position.ChangeMaxPlayer()
+	}
+
+	if maxCounter+minCounter != 0 {
+		return 100 * (maxCounter - minCounter) / (maxCounter + minCounter)
+	}
+	return 0
+}
+
+func cornersCaptured(position *board.Board) int {
+	var maxCounter, minCounter int
+
+	if position.Board[1][1] == 'B' {
+		minCounter++
+	} else if position.Board[1][1] == 'W' {
+		maxCounter++
+	}
+
+	if position.Board[8][8] == 'B' {
+		minCounter++
+	} else if position.Board[8][8] == 'W' {
+		maxCounter++
+	}
+
+	if position.Board[8][1] == 'B' {
+		minCounter++
+	} else if position.Board[8][1] == 'W' {
+		maxCounter++
+	}
+
+	if position.Board[1][8] == 'B' {
+		minCounter++
+	} else if position.Board[1][8] == 'W' {
+		maxCounter++
+	}
+
+	if maxCounter+minCounter != 0 {
+		return 100 * (maxCounter - minCounter) / (maxCounter + minCounter)
+	}
+	return 0
 }
 
 /** Returns an integer, representing a heuristic evaluation of the postion. */
 func (e *Evaluator) Evaluate(position *board.Board) int {
-	// Black and white are reversed
-	if position.GetMaxPlayer() {
-		color = 'W'
-	} else {
-		color = 'B'
-	}
-	var myCounter, opponentCounter int
 
 	// coin parity
-	myCounter, opponentCounter = mobility(position)
-	return myCounter - opponentCounter
+	mobilityIndex := mobility(position)
+	coinParityIndex := coinParity(position)
+	cornersCapturedIndex := cornersCaptured(position)
+
+	return mobilityIndex*100 + coinParityIndex*20 + cornersCapturedIndex*800
 }

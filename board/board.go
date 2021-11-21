@@ -231,6 +231,7 @@ func checkSouthEast(row, col int) bool {
 	}
 	return false
 }
+
 func checkSouthWest(row, col int) bool {
 	if !isOpponentSquare(row+1, col-1) {
 		return false
@@ -245,6 +246,7 @@ func checkSouthWest(row, col int) bool {
 	}
 	return false
 }
+
 func checkNorthWest(row, col int) bool {
 	if !isOpponentSquare(row-1, col-1) {
 		return false
