@@ -1,13 +1,12 @@
+// Package evaluator gives functions that gives heuristic value of a Board structure
 package evaluator
 
 import (
 	"github.com/tomkimsour/Othello/board"
 )
 
-type Evaluator struct {
-	value int
-}
-
+// coinParity return an integer representing the coin parity ranged from -100 to 100
+// given the pointer of a board state
 func coinParity(position *board.Board) int {
 	boardSize := board.BoardSize
 	maxCounter := 0
@@ -27,6 +26,8 @@ func coinParity(position *board.Board) int {
 	return 0
 }
 
+// mobility return an integer representing the number of moves possible ranged from -100 to 100
+// given the pointer of a board state
 func mobility(position *board.Board) int {
 	var maxCounter, minCounter int
 
@@ -48,6 +49,8 @@ func mobility(position *board.Board) int {
 	return 0
 }
 
+// cornersCaptured return an integer representing the possession of corners between -100 and 100
+// given the pointer of a board state
 func cornersCaptured(position *board.Board) int {
 	var maxCounter, minCounter int
 
@@ -81,8 +84,8 @@ func cornersCaptured(position *board.Board) int {
 	return 0
 }
 
-/** Returns an integer, representing a heuristic evaluation of the postion. */
-func (e *Evaluator) Evaluate(position *board.Board) int {
+/* Evaluate returns an integer, representing a heuristic evaluation of the postion. */
+func Evaluate(position *board.Board) int {
 
 	// coin parity
 	mobilityIndex := mobility(position)

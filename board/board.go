@@ -1,3 +1,4 @@
+// Package board gives functions that allows to interact with the structure Board
 package board
 
 import (
@@ -10,9 +11,10 @@ import (
 
 const BoardSize int = 8
 
+// Struct board describes a board of othello and the current player
 type Board struct {
-	Board     [BoardSize + 2][BoardSize + 2]rune
-	maxPlayer bool // True if the player is white
+	Board     [BoardSize + 2][BoardSize + 2]rune // board representation in matrix form
+	maxPlayer bool                               // True if the player is white
 }
 
 var localBoard *Board
@@ -70,6 +72,7 @@ func (b *Board) GetMaxPlayer() bool {
 	return b.maxPlayer
 }
 
+// function ChangeMaxPlayer changes the player of the current structure Board
 func (b *Board) ChangeMaxPlayer() {
 	b.maxPlayer = !b.maxPlayer
 }
@@ -142,6 +145,7 @@ func isOwnSquare(row, column int) bool {
 	return false
 }
 
+// Check if it is possible to do a move to the north from this position
 func checkNorth(row, column int) bool {
 	if !isOpponentSquare(row-1, column) {
 		return false
@@ -157,6 +161,7 @@ func checkNorth(row, column int) bool {
 	return false
 }
 
+// Check if it is possible to do a move to the east from this position
 func checkEast(row, col int) bool {
 	if !isOpponentSquare(row, col+1) {
 		return false
@@ -172,6 +177,7 @@ func checkEast(row, col int) bool {
 	return false
 }
 
+// Check if it is possible to do a move to the south from this position
 func checkSouth(row, col int) bool {
 	if !isOpponentSquare(row+1, col) {
 		return false
@@ -187,6 +193,7 @@ func checkSouth(row, col int) bool {
 	return false
 }
 
+// Check if it is possible to do a move to the west from this position
 func checkWest(row, col int) bool {
 	if !isOpponentSquare(row, col-1) {
 		return false
@@ -202,6 +209,7 @@ func checkWest(row, col int) bool {
 	return false
 }
 
+// Check if it is possible to do a move to the north east from this position
 func checkNorthEast(row, col int) bool {
 	if !isOpponentSquare(row-1, col+1) {
 		return false
@@ -217,6 +225,7 @@ func checkNorthEast(row, col int) bool {
 	return false
 }
 
+// Check if it is possible to do a move to the south east from this position
 func checkSouthEast(row, col int) bool {
 	if !isOpponentSquare(row+1, col+1) {
 		return false
@@ -232,6 +241,7 @@ func checkSouthEast(row, col int) bool {
 	return false
 }
 
+// Check if it is possible to do a move to the south west from this position
 func checkSouthWest(row, col int) bool {
 	if !isOpponentSquare(row+1, col-1) {
 		return false
@@ -247,6 +257,7 @@ func checkSouthWest(row, col int) bool {
 	return false
 }
 
+// Check if it is possible to do a move to the north west from this position
 func checkNorthWest(row, col int) bool {
 	if !isOpponentSquare(row-1, col-1) {
 		return false
@@ -262,7 +273,7 @@ func checkNorthWest(row, col int) bool {
 	return false
 }
 
-// check if the move is a valid move
+// Check if it is possible to do a move from this position
 func isMove(row int, col int) bool {
 	if checkNorth(row, col) {
 		return true
@@ -325,7 +336,8 @@ func printHorizontalBorder() {
 	fmt.Println("|---")
 }
 
-// display in the console the state of the game
+// Draws an ASCII representation of the position. White squares are marked by
+// '0' while black squares are marked by 'X'.
 func (b *Board) Print() {
 	fmt.Print("   ")
 	for i := 1; i <= BoardSize; i++ {
@@ -401,8 +413,8 @@ func (b *Board) flipSquare(row, col int) {
 	}
 }
 
-// play an action on the board
-// return the new board with the played action
+// play an Action on the board
+// return the new Board with the played action
 func (b *Board) MakeMove(action *action.Action) *Board {
 	localBoard = b.Clone()
 

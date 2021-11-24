@@ -12,6 +12,8 @@ import (
 func main() {
 	var sequence string
 	var time int
+
+	// error handling
 	if len(os.Args) > 1 {
 		sequence = os.Args[1]
 	} else {
@@ -26,10 +28,11 @@ func main() {
 		log.Fatal("The string has to be of size 65")
 	}
 
+	// Parse the string board, format it and look for the best playable move according to heuristic
 	currentBoard := board.New()
 
 	currentBoard.OthelloPosition(sequence)
-	abp := alphabetapruning.New(currentBoard, 9, time)
+	abp := alphabetapruning.New(9, time)
 
 	move := abp.Evaluate(currentBoard)
 	move.Print()

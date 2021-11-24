@@ -1,3 +1,4 @@
+// package action gives tools to represent actions with a board position and an heuristic value
 package action
 
 import (
@@ -5,23 +6,25 @@ import (
 )
 
 type Action struct {
-	/** The row where the marker is placed. */
+	/* The row where the marker is placed. */
 	row int
 
-	/** The column where the marker is placed. */
+	/* The column where the marker is placed. */
 	col int
 
-	/** The estimated value of the move. */
+	/* The estimated value of the move. */
 	value int
 
-	/** True if the player has to pass, i.e., if there is no legal move. */
+	/* True if the player has to pass, i.e., if there is no legal move. */
 	pass bool
 }
 
+// create a new structure Action
 func New(r, c int) *Action {
 	return new(Action).Init(r, c)
 }
 
+// Initialise the Action structure
 func (a *Action) Init(r, c int) *Action {
 	a.row = r
 	a.col = c
@@ -29,48 +32,44 @@ func (a *Action) Init(r, c int) *Action {
 	return a
 }
 
-/** Sets the estimated value of the move. */
+/* Sets the estimated value of the move. */
 func (a *Action) SetValue(v int) {
 	a.value = v
 }
 
-/** Returns the estimated value of the move. */
+/* Returns the estimated value of the move. */
 func (a *Action) GetValue() int {
 	return a.value
 }
 
-/** Sets the column where the marker is to be placed. */
+/* Sets the column where the marker is to be placed. */
 func (a *Action) SetColumn(c int) {
 	a.col = c
 }
 
-/** Returns the column where the marker is to be placed. */
+/* Returns the column where the marker is to be placed. */
 func (a *Action) GetColumn() int {
 	return a.col
 }
 
-/** Sets the row where the marker is to be placed. */
+/* Sets the row where the marker is to be placed. */
 func (a *Action) SetRow(r int) {
 	a.row = r
 }
 
-/** Returns the row where the marker is to be placed. */
+/* Returns the row where the marker is to be placed. */
 func (a *Action) GetRow() int {
 	return a.row
 }
 
-/**
- * Sets the boolean that indicates whether this is a pass move. This should only
- * be true if there are no legal moves.
- */
+// Sets the boolean that indicates whether this is a pass move. This should only
+// be true if there are no legal moves.
 func (a *Action) SetPassMove(b bool) {
 	a.pass = b
 }
 
-/**
- * Returns true if this is a pass move, indicating that the player has no legal
- * moves. Otherwise returns false.
- */
+// Returns true if this is a pass move, indicating that the player has no legal
+// moves. Otherwise returns false.
 func (a *Action) IsPassMove() bool {
 	return a.pass
 }
