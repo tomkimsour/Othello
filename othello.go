@@ -4,9 +4,6 @@ import (
 	"log"
 	"os"
 	"strconv"
-
-	alphabetapruning "github.com/tomkimsour/Othello/alpha-beta-pruning"
-	"github.com/tomkimsour/Othello/board"
 )
 
 func main() {
@@ -29,11 +26,14 @@ func main() {
 	}
 
 	// Parse the string board, format it and look for the best playable move according to heuristic
-	currentBoard := board.New()
+	currentBoard := NewBoard()
 
 	currentBoard.OthelloPosition(sequence)
-	abp := alphabetapruning.New(9, time)
+	abp := NewAlphaBetaPruning(time)
 
 	move := abp.Evaluate(currentBoard)
+	if move == nil {
+		log.Fatal("The program timeout without being able to result any move")
+	}
 	move.Print()
 }

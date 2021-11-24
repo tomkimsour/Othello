@@ -1,5 +1,5 @@
 // package action gives tools to represent actions with a board position and an heuristic value
-package action
+package main
 
 import (
 	"fmt"
@@ -20,7 +20,7 @@ type Action struct {
 }
 
 // create a new structure Action
-func New(r, c int) *Action {
+func NewAction(r, c int) *Action {
 	return new(Action).Init(r, c)
 }
 
@@ -28,7 +28,7 @@ func New(r, c int) *Action {
 func (a *Action) Init(r, c int) *Action {
 	a.row = r
 	a.col = c
-
+	a.pass = false
 	return a
 }
 
@@ -74,6 +74,7 @@ func (a *Action) IsPassMove() bool {
 	return a.pass
 }
 
+// Print the action
 func (a *Action) Print() {
 	if a.pass {
 		fmt.Println("pass")

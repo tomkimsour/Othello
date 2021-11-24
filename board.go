@@ -1,12 +1,10 @@
 // Package board gives functions that allows to interact with the structure Board
-package board
+package main
 
 import (
 	"container/list"
 	"fmt"
 	"strconv"
-
-	"github.com/tomkimsour/Othello/action"
 )
 
 const BoardSize int = 8
@@ -20,7 +18,7 @@ type Board struct {
 var localBoard *Board
 
 // create a new board
-func New() *Board {
+func NewBoard() *Board {
 	return new(Board).Init()
 }
 
@@ -320,7 +318,7 @@ func (b *Board) GetMoves() *list.List {
 		for j := 0; j < BoardSize; j++ {
 			if candidates[i][j] {
 				if isMove(i+1, j+1) {
-					moves.PushBack(action.New(i+1, j+1))
+					moves.PushBack(NewAction(i+1, j+1))
 				}
 			}
 		}
@@ -394,7 +392,7 @@ func (b *Board) ToString() string {
 
 // copy the board structure
 func (b *Board) Clone() *Board {
-	var newPosition *Board = New()
+	var newPosition *Board = NewBoard()
 	newPosition.maxPlayer = b.maxPlayer
 	for i := 0; i < BoardSize+2; i++ {
 		for j := 0; j < BoardSize+2; j++ {
@@ -415,7 +413,7 @@ func (b *Board) flipSquare(row, col int) {
 
 // play an Action on the board
 // return the new Board with the played action
-func (b *Board) MakeMove(action *action.Action) *Board {
+func (b *Board) MakeMove(action *Action) *Board {
 	localBoard = b.Clone()
 
 	rowAction := action.GetRow()

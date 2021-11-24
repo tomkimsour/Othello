@@ -22,7 +22,7 @@ cd "$(dirname "$0")"
 
 if [ $do_compile -eq 1 ]; then
 	# Compile the code:
-	go build *.go
+	go build -o othello
 else
 	# Call your Java program with a position and time limit:
 	./othello $position $time_limit
