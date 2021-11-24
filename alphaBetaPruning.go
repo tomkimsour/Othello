@@ -1,3 +1,5 @@
+// package alpha-beta-pruning gives functions to perform
+// iterative alpha beta pruning search on a Board structure
 package main
 
 import (
