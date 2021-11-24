@@ -1,5 +1,5 @@
 // package action gives tools to represent actions with a board position and an heuristic value
-package action
+package main
 
 import (
 	"fmt"
@@ -20,7 +20,7 @@ type Action struct {
 }
 
 // create a new structure Action
-func New(r, c int) *Action {
+func NewAction(r, c int) *Action {
 	return new(Action).Init(r, c)
 }
 
