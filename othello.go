@@ -29,8 +29,11 @@ func main() {
 	currentBoard := NewBoard()
 
 	currentBoard.OthelloPosition(sequence)
-	abp := NewAlphaBetaPruning(9, time)
+	abp := NewAlphaBetaPruning(time)
 
 	move := abp.Evaluate(currentBoard)
+	if move == nil {
+		log.Fatal("The program timeout without being able to result any move")
+	}
 	move.Print()
 }

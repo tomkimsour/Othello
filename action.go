@@ -28,7 +28,7 @@ func NewAction(r, c int) *Action {
 func (a *Action) Init(r, c int) *Action {
 	a.row = r
 	a.col = c
-
+	a.pass = false
 	return a
 }
 
@@ -74,6 +74,7 @@ func (a *Action) IsPassMove() bool {
 	return a.pass
 }
 
+// Print the action
 func (a *Action) Print() {
 	if a.pass {
 		fmt.Println("pass")

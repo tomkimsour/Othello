@@ -13,19 +13,17 @@ const MinPlayer bool = false
 var semaphore bool = false
 
 type AlphaBetaPruning struct {
-	searchDepth int
-	moves       list.List
-	timeout     int
+	moves   list.List
+	timeout int
 }
 
 // creates a new Structure AlphaBetaPruning with a depth and timeout value
-func NewAlphaBetaPruning(depth, time int) *AlphaBetaPruning {
-	return new(AlphaBetaPruning).Init(depth, time)
+func NewAlphaBetaPruning(time int) *AlphaBetaPruning {
+	return new(AlphaBetaPruning).Init(time)
 }
 
 // Initialize a structure AlphaBetaPruning
-func (abp *AlphaBetaPruning) Init(depth, time int) *AlphaBetaPruning {
-	abp.searchDepth = depth
+func (abp *AlphaBetaPruning) Init(time int) *AlphaBetaPruning {
 	abp.timeout = time
 	return abp
 }
@@ -41,18 +39,13 @@ func (abp *AlphaBetaPruning) Evaluate(position *Board) *Action {
 		semaphore = true
 	}(abp.timeout)
 
-	for i := 7; !semaphore; i++ {
+	for i := 4; !semaphore; i++ {
 		lastPosition = abp.alphabeta(position, i, NegInfty, PosInfty)
 		if !semaphore {
 			finalPosition = lastPosition
 		}
 	}
 	return finalPosition
-}
-
-// Sets the maximum search depth of the algorithm.
-func (abp *AlphaBetaPruning) SetSearchDepth(depth int) {
-	abp.searchDepth = depth
 }
 
 // takes the minimum value between a and b
