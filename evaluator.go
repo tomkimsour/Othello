@@ -27,17 +27,10 @@ func coinParity(position *Board) int {
 func mobility(position *Board) int {
 	var maxCounter, minCounter int
 
-	if position.GetMaxPlayer() == false {
-		maxCounter = position.GetMoves().Len()
-		position.ChangeMaxPlayer()
-		minCounter = position.GetMoves().Len()
-		position.ChangeMaxPlayer()
-	} else {
-		minCounter = position.GetMoves().Len()
-		position.ChangeMaxPlayer()
-		maxCounter = position.GetMoves().Len()
-		position.ChangeMaxPlayer()
-	}
+	maxCounter = position.GetMoves().Len()
+	position.ChangeMaxPlayer()
+	minCounter = position.GetMoves().Len()
+	position.ChangeMaxPlayer()
 
 	if maxCounter+minCounter != 0 {
 		return 100 * (maxCounter - minCounter) / (maxCounter + minCounter)
